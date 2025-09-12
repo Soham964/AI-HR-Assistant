@@ -24,6 +24,9 @@ import Signup from './components/Signup';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase';
 
+// Environment variable for backend URL
+const BACKEND_HOST = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:5000';
+
 interface Message {
   id: string;
   content: string;
@@ -334,7 +337,7 @@ function App() {
     formData.append('jobDescription', jobDesc);
 
     try {
-      const response = await fetch('http://localhost:5000/api/ats/score', {
+      const response = await fetch(`${BACKEND_HOST}/api/ats/score`, {
         method: 'POST',
         body: formData,
       });
@@ -468,7 +471,7 @@ function App() {
         interviewDate: new Date(interviewData.interviewDate).toISOString()
       };
 
-      const response = await fetch('http://localhost:5000/api/interviews', {
+      const response = await fetch(`${BACKEND_HOST}/api/interviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -486,7 +489,7 @@ function App() {
           const newToken = await refreshToken();
           if (newToken) {
             // Retry the request with new token
-            const retryResponse = await fetch('http://localhost:5000/api/interviews', {
+            const retryResponse = await fetch(`${BACKEND_HOST}/api/interviews`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -500,7 +503,7 @@ function App() {
               const newInterview: Interview = { ...newInterviewData, id: newInterviewData._id || newInterviewData.id };
               
               // Generate call letter after successful interview scheduling
-              const callLetterResponse = await fetch(`http://localhost:5000/api/interviews/${newInterview.id}/generate-call-letter`, {
+              const callLetterResponse = await fetch(`${BACKEND_HOST}/api/interviews/${newInterview.id}/generate-call-letter`, {
                 method: 'POST',
                 headers: {
                   'x-auth-token': newToken,
@@ -536,7 +539,7 @@ function App() {
       const newInterview: Interview = { ...newInterviewData, id: newInterviewData._id || newInterviewData.id };
 
       // Generate call letter after successful interview scheduling
-      const callLetterResponse = await fetch(`http://localhost:5000/api/interviews/${newInterview.id}/generate-call-letter`, {
+      const callLetterResponse = await fetch(`${BACKEND_HOST}/api/interviews/${newInterview.id}/generate-call-letter`, {
         method: 'POST',
         headers: {
           'x-auth-token': token,
@@ -605,7 +608,7 @@ function App() {
 
     try {
       // Fetch interviews from backend
-      const response = await fetch('http://localhost:5000/api/interviews', {
+      const response = await fetch(`${BACKEND_HOST}/api/interviews`, {
         headers: {
           'x-auth-token': token,
         },
@@ -768,7 +771,7 @@ function App() {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch(`${BACKEND_HOST}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -874,7 +877,7 @@ function App() {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/interviews/${interviewId}`, {
+      const response = await fetch(`${BACKEND_HOST}/api/interviews/${interviewId}`, {
         method: 'DELETE',
         headers: {
           'x-auth-token': token,

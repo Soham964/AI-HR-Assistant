@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 
+// Environment variable for backend URL
+const BACKEND_HOST = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:5000';
+
 const Signup: React.FC<{ onSwitchToLogin?: () => void; onSignupSuccess: () => void }> = ({ onSwitchToLogin, onSignupSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +22,7 @@ const Signup: React.FC<{ onSwitchToLogin?: () => void; onSignupSuccess: () => vo
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
 
-      const backendRegisterResponse = await fetch('http://localhost:5000/api/auth/register', {
+      const backendRegisterResponse = await fetch(`${BACKEND_HOST}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
