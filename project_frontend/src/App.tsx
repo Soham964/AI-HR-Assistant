@@ -25,7 +25,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase';
 
 // Environment variable for backend URL
-const BACKEND_HOST = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:5000';
+const BACKEND_HOST = import.meta.env.BACKEND_HOST || 'http://localhost:5000';
 
 interface Message {
   id: string;
