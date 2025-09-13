@@ -5,6 +5,15 @@ const jwt = require('jsonwebtoken');
 const Employee = require('../models/Employee');
 const auth = require('../middleware/auth');
 
+// Test endpoint to verify backend is working
+router.get('/', (req, res) => {
+  res.json({ 
+    message: 'HR Manager Auth API is working!', 
+    status: 'healthy',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Register new employee
 router.post('/register', async (req, res) => {
   try {
