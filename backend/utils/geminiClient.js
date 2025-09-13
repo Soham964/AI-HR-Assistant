@@ -7,10 +7,10 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 /**
  * Generate content using Gemini API
  * @param {string} prompt - The prompt to send to Gemini
- * @param {string} modelName - The model to use (default: gemini-2.0-flash)
+ * @param {string} modelName - The model to use (default: gemini-1.5-flash)
  * @returns {Promise<string>} - Generated content
  */
-async function generateContent(prompt, modelName = 'gemini-2.0-flash') {
+async function generateContent(prompt, modelName = 'gemini-1.5-flash') {
     try {
         const model = genAI.getGenerativeModel({ model: modelName });
         const result = await model.generateContent(prompt);
@@ -26,7 +26,7 @@ async function generateContent(prompt, modelName = 'gemini-2.0-flash') {
  * Generate content with custom configuration
  * @param {string} prompt - The prompt to send to Gemini
  * @param {object} config - Configuration object
- * @param {string} config.model - Model name (default: gemini-2.0-flash)
+ * @param {string} config.model - Model name (default: gemini-1.5-flash)
  * @param {number} config.temperature - Temperature for generation (default: 0.7)
  * @param {number} config.maxOutputTokens - Maximum tokens to generate
  * @returns {Promise<string>} - Generated content
@@ -34,7 +34,7 @@ async function generateContent(prompt, modelName = 'gemini-2.0-flash') {
 async function generateContentWithConfig(prompt, config = {}) {
     try {
         const {
-            model = 'gemini-2.0-flash',
+            model = 'gemini-1.5-flash',
             temperature = 0.7,
             maxOutputTokens = 1000
         } = config;
